@@ -9,7 +9,7 @@
 #include "TBenchmark.h"
 #include "TRandom.h"
 #include "TSystem.h"
-//#include "TTreePerfStats.h"
+#include "TTreePerfStats.h"
 
 //Originally authored by the ROOT Team: https://root.cern/doc/master/hvector_8C.html
 
@@ -25,7 +25,7 @@ void read()
    TTree *t; f->GetObject("tvec",t);
    std::vector<float> *vpx = 0;
 
- // TTreePerfStats* myIOStats = new TTreePerfStats("IOPerfStats", t);
+   TTreePerfStats* myIOStats = new TTreePerfStats("IOPerfStats", t);
  
    TBranch *bvpx = 0;
    t->SetBranchAddress("vpx",&vpx,&bvpx);
@@ -35,13 +35,12 @@ void read()
       bvpx->GetEntry(tentry);
  
    }
-   
    // Since we passed the address of a local variable we need
    // to remove it.
    t->ResetBranchAddresses();
 
-//   myIOStats->SaveAs("iostats.root");
-//   f->Close();
+   myIOStats->SaveAs("iostats.root");
+   f->Close();
 
 }
  
@@ -53,6 +52,9 @@ void readModified()
    if (!f) { return; }
    TTree *t; f->GetObject("tvec",t);
    std::vector<float> *vpx_modified = 0; 
+   
+   TTreePerfStats* myIOStats = new TTreePerfStats("IOPerfStats", t);
+   
    TBranch *bvpx_modified = 0;
    t->SetBranchAddress("vpx_modified",&vpx_modified,&bvpx_modified);
  
@@ -61,10 +63,16 @@ void readModified()
       bvpx_modified->GetEntry(tentry);
  
    }
+   
 
+   
    // Since we passed the address of a local variable we need
    // to remove it.
    t->ResetBranchAddresses();
+
+
+   myIOStats->SaveAs("iostats_modified.root");
+   f->Close();
 }
 
  
