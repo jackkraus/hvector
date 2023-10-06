@@ -1,6 +1,13 @@
 # hvector
 from the hvector.c ROOT tutorial
 
+Motivation: To use a toy model to view the differences in modified configurations of Athena and ROOT to investigate the branch compression and memory usage. 
+Method: Build ROOT with changes that don't affect the binaries that need to agree with Athena. 
+
+What we found was not a significant gain in compression after pre-configuring the basket size to exceed no more than 128*1024 kilobytes. 
+
+
+----
 When using a modified build of ROOT, run `lsetup` with:
 
 ```
