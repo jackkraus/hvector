@@ -1,48 +1,17 @@
-# hvector
-from the hvector.c ROOT tutorial
+# README.md
 
-Motivation: To use a toy model to view the differences in modified configurations of Athena and ROOT to investigate the branch compression and memory usage. 
-Method: Build ROOT with changes that don't affect the binaries that need to agree with Athena. 
+to run these scripts you're going to need to build the version of athena that has my `xAOD::DummyElectron` object involved, instructions to build that are found [here](https://github.com/jackkraus/readxAOD-script)
 
-What we found was not a significant gain in compression after pre-configuring the basket size to exceed no more than 128*1024 kilobytes. 
-
-
-----
-When using a modified build of ROOT, run `lsetup` with:
-
+Make sure you build and source properly and from there, you'll need to clone this repo:
 ```
-lsetup "asetup none, gcc11, cmakesetup --cmakeversion=3.24.3"
+git clone https://github.com/jackkraus/hvector.git
 ```
 
----
-
-The directories structure: 
-
-- `ROOT_dev/`
-  - `build_dir/`
-  - `install_dir/`
-  - `root_src/`
-- `hvector/`
-  - `writeROOTFile.c`
-  - `readROOTFile.c`  
-
----
-
-In `build_dir/`
+and then you'll need to run root and execute the following commands: 
 ```
-cmake -DCMAKE_INSTALL_PREFIX=/ROOT_dev/install_dir /ROOT_dev/root_src
+$ root -l
+root [0] .x writeROOTFile_dummyElectron.c
+( ... output here ... )
+root [1] .x readROOTFile_dummyElectron.c
+( ... more output ... )
 ```
-and
-```
-cmake --build . --target install
-```
-
-My `ROOT_dev/root_src/` is found: https://github.com/arthurkraus3/root/tree/development
-
-Then you'll change the source of ROOT by doing: 
-
-```
-source /ROOT_dev/install_dir/bin/thisroot.sh 
-```
-
---- 
